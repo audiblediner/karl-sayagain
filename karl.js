@@ -11,7 +11,7 @@ app.listen(3000);
 
 // insert your twitter app info here
 var T = new Twit({
-  consumer_key:         '', 
+  consumer_key:         '',
   consumer_secret:      '',
   access_token:         '',
   access_token_secret:  ''
@@ -27,7 +27,7 @@ var getNounsURL = "http://api.wordnik.com/v4/words.json/randomWords?" +
                   "api_key=______YOUR_API_KEY_HERE___________";
 
 var getAdjsURL =  "http://api.wordnik.com/v4/words.json/randomWords?" +
-                  "hasDictionaryDef=true&includePartOfSpeech=adjective&limit=2&" + 
+                  "hasDictionaryDef=true&includePartOfSpeech=adjective&limit=2&" +
                   "minCorpusCount=100&api_key=______YOUR_API_KEY_HERE___________";
 
 
@@ -103,9 +103,9 @@ function makeMetaphor() {
           console.log("error: " + err);
           console.log("reply: " + reply);
         });
-      }    
+      }
     ,"json");
-  }    
+  }
   ,"json");
 }
 
@@ -114,7 +114,7 @@ function favRTs () {
     for(var i=0;i<r.length;i++) {
       T.post('favorites/create/'+r[i].id_str,{},function(){});
     }
-    console.log('harvested some RTs'); 
+    console.log('harvested some RTs');
   });
 }
 
