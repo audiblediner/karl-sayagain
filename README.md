@@ -19,4 +19,15 @@ Finally, you need a Wordnik API key, which you can apply for here: http://develo
 
 > npm install express@2.5.9
 
-> node metaphor.js
+> node karl.js
+
+==========
+
+### To-do
+[X] Change primary function name from makeMetaphor to makeQuote
+[X] Pull in twitter info from config file
+[] Modify so Wordnik getNouns URL is generated using api key from config file
+[X] Remove RTing/favoriting functionality
+[X] Remove connector variables for noun portion
+[X] Remove connector variables for adjective portion
+[X] Remove the wordnik adjective definition and call
