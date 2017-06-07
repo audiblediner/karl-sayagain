@@ -1,9 +1,3 @@
-/* todo
-- carry changes over from live file to here
-- create separate file to pass Twitter and Wordnik API info
-- drink some water
-*/
-
 var restclient = require('node-restclient');
 var Twit = require('twit');
 var app = require('express').createServer();
@@ -16,12 +10,7 @@ app.get('/', function(req, res){
 app.listen(3000);
 
 // insert your twitter app info here
-var T = new Twit({
-  consumer_key:         '',
-  consumer_secret:      '',
-  access_token:         '',
-  access_token_secret:  ''
-});
+var T = new Twit(require('./config.js'));
 
 var statement =   "";
 
@@ -30,19 +19,16 @@ var getNounsURL = "http://api.wordnik.com/v4/words.json/randomWords?" +
                   "minCorpusCount=1000&minDictionaryCount=10&" +
                   "excludePartOfSpeech=proper-noun,proper-noun-plural,proper-noun-posessive,suffix,family-name,idiom,affix&" +
                   "hasDictionaryDef=true&includePartOfSpeech=noun&limit=2&maxLength=12&" +
-                  "api_key=______YOUR_API_KEY_HERE___________";
+                  "api_key=___INSERT-YOUR-WORDNIK-API-KEY-HERE_____";
 
-var getAdjsURL =  "http://api.wordnik.com/v4/words.json/randomWords?" +
-                  "hasDictionaryDef=true&includePartOfSpeech=adjective&limit=2&" +
-                  "minCorpusCount=100&api_key=______YOUR_API_KEY_HERE___________";
-
-
-function makeMetaphor() {
+function makeQuote() {
   statement = "";
   restclient.get(getNounsURL,
   function(data) {
     first = data[0].word.substr(0,1);
     first2 = data[1].word.substr(0,1);
+    firstPart = "If you wish to make";
+    secondPart = "from scratch, you must first invent";
     article = "a";
     if (first === 'a' ||
         first === 'e' ||
@@ -60,50 +46,9 @@ function makeMetaphor() {
       article2 = "an";
     }
 
-    var connector = "is";
-    switch (Math.floor(Math.random()*12)) {
-      case 0:
-        connector = "of";
-      break;
-      case 1:
-        connector = "is";
-      break;
-      case 2:
-        connector = "is";
-      break;
-      case 3:
-        connector = "considers";
-      break;
-      case 4:
-        connector = "is";
-      break;
-    }
+    statement += firstPart + " " + article + " " + data[0].word + " " +secondPart + " " + article2 + " " + data[1].word;
 
-    statement += article + " " + data[0].word + " " + connector + " " + article2 + " " + data[1].word;
-
-    restclient.get(
-      getAdjsURL,
-      function(data) {
-        var connector = " and";
-        switch (Math.floor(Math.random()*8)) {
-          case 0:
-            connector = ", not";
-          break;
-          case 1:
-            connector = ", yet";
-          break;
-          case 2:
-            connector = " but";
-          break;
-          case 3:
-            connector = ",";
-          break;
-          case 4:
-            connector = ", but not";
-          break;
-        }
-        output = data[0].word + connector + " " + data[1].word;
-        statement = statement + ": " + output;
+        statement = statement + ".";
         console.log(statement);
         T.post('statuses/update', { status: statement}, function(err, reply) {
           console.log("error: " + err);
@@ -112,36 +57,15 @@ function makeMetaphor() {
       }
     ,"json");
   }
-  ,"json");
-}
-
-function favRTs () {
-  T.get('statuses/retweets_of_me', {}, function (e,r) {
-    for(var i=0;i<r.length;i++) {
-      T.post('favorites/create/'+r[i].id_str,{},function(){});
-    }
-    console.log('harvested some RTs');
-  });
-}
 
 // every 2 minutes, make and tweet a metaphor
 // wrapped in a try/catch in case Twitter is unresponsive, don't really care about error
 // handling. it just won't tweet.
 setInterval(function() {
   try {
-    makeMetaphor();
+    makeQuote();
   }
  catch (e) {
     console.log(e);
   }
 },120000);
-
-// every 5 hours, check for people who have RTed a metaphor, and favorite that metaphor
-setInterval(function() {
-  try {
-    favRTs();
-  }
- catch (e) {
-    console.log(e);
-  }
-},60000*60*5);
