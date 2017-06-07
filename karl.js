@@ -1,3 +1,9 @@
+/* todo
+- carry changes over from live file to here
+- create separate file to pass Twitter and Wordnik API info
+- drink some water
+*/
+
 var restclient = require('node-restclient');
 var Twit = require('twit');
 var app = require('express').createServer();
