@@ -26,9 +26,7 @@ function makeQuote() {
   restclient.get(getNounsURL,
   function(data) {
     first = data[0].word.substr(0,1);
-    first2 = data[1].word.substr(0,1);
-    firstPart = "If you wish to make";
-    secondPart = "from scratch, you must first invent";
+    second = data[1].word.substr(0,1);
     article = "a";
     if (first === 'a' ||
         first === 'e' ||
@@ -38,15 +36,15 @@ function makeQuote() {
       article = "an";
     }
    article2 = "a";
-    if (first2 === 'a' ||
-        first2 === 'e' ||
-        first2 === 'i' ||
-        first2 === 'o' ||
-        first2 === 'u') {
+    if (second === 'a' ||
+        second === 'e' ||
+        second === 'i' ||
+        second === 'o' ||
+        second === 'u') {
       article2 = "an";
     }
 
-    statement += firstPart + " " + article + " " + data[0].word + " " +secondPart + " " + article2 + " " + data[1].word;
+    statement += "If you wish to make " + article + " " + data[0].word + " from scratch, you must first invent " + article2 + " " + data[1].word + ".";
 
         statement = statement + ".";
         console.log(statement);
