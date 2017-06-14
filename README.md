@@ -24,6 +24,7 @@ Finally, you need a Wordnik API key, which you can apply for here: http://develo
 ==========
 
 ### To-do
+- [ ] Create trigger so bot will stop when thee quote is printed
 - [X] Change primary function name from makeMetaphor to makeQuote
 - [X] Pull in twitter info from config file
 - [ ] Modify so Wordnik getNouns URL is generated using api key from config file
