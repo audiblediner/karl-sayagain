@@ -3,7 +3,7 @@
 
 I'm not sure whether to call this a tribute bot or a grief bot? If I make more using quotes from folks no longer with us, and decide to refer to them collectively with the term graveyard, one or the other might be more fitting. Something to thunk on.
 
-Running at: https://twitter.com/KarlSayagain
+Formerly running at: https://twitter.com/KarlSayagain
 
 ==========
 
